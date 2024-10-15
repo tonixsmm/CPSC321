@@ -1,0 +1,21 @@
+<html>
+    <header>
+        <h1>Flight History App</h1>
+        <h2>Show all User's Flights</h2>
+    </header>
+  <body onload="loadFlightData()">
+    <div id="flight-data"></div>
+  </body>
+  <script src="show_flight.js"></script>
+  <script>
+    // Fetch and populate the dropdown list with pet types\
+    function loadFlightData() {
+        fetch('/show_flight')
+        .then(response => response.text())
+        .then(html => {
+                    document.getElementById('flight-data').innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+    }
+</script>
+</html>

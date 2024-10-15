@@ -1,0 +1,64 @@
+<html>
+    <header>
+        <h1>Flight History App</h1>
+        <h2>Dashboard</h2>
+    </header>
+  <body>
+    <!-- <h1>Flight Dashboard</h1> -->
+    <button id="fetchDashboard">Get Dashboard</button>
+    <div id="DashboardResult"></div>
+
+    <script>
+        document.getElementById('fetchDashboard').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/show_dashboard');
+                const data = await response.json();
+                displayAnalytics(data);  // Call the function to process and display data
+            } catch (err) {
+                console.error('Error fetching analytics:', err);
+                document.getElementById('DashboardResult').innerHTML = 'Error fetching dashboard data.';
+            }
+        });
+
+        function displayAnalytics(data) {
+            const resultsDiv = document.getElementById('DashboardResult');
+            resultsDiv.innerHTML = '';
+
+            // Function to create a table for each analytics section
+            const createTable = (title, dataArray, valueName) => {
+                let html = `<div class="dashboard-section"><h3>${title}</h3><table class="dashboard-table"><tbody>`;
+                dataArray.forEach(item => {
+                    html += `<tr><td>${item[valueName]}</td></tr>`;
+                });
+                html += '</tbody></table></div>';
+                return html;
+            };
+
+            resultsDiv.innerHTML += createTable('Total Flights', data.totalFlights, 'totalFlights');
+            resultsDiv.innerHTML += createTable('Total Distance', data.totalDistance, 'totalDistance');
+            resultsDiv.innerHTML += createTable('Average Flight Time', data.averageFlightTime, 'averageFlightTime');
+            resultsDiv.innerHTML += createTable('Number of Seat Classes', data.numberOfSeatClasses, 'numberOfSeatClasses');
+
+            // Special handling for top routes
+            if (data.topRoutes && data.topRoutes.length > 0) {
+                let topRoutesHtml = `<div class="dashboard-section"><h3>Top Routes</h3><table class="dashboard-table"><thead><tr><th>Route</th><th>Number of Flights</th></tr></thead><tbody>`;
+                data.topRoutes.forEach(route => {
+                    topRoutesHtml += `<tr><td>${route.route}</td><td>${route.numberOfFlights}</td></tr>`;
+                });
+                topRoutesHtml += '</tbody></table></div>';
+                resultsDiv.innerHTML += topRoutesHtml;
+            }
+
+            // Special handling for top countries
+            if (data.topCountries && data.topCountries.length > 0) {
+                let topCountriesHtml = `<div class="dashboard-section"><h3>Top Countries</h3><table class="dashboard-table"><thead><tr><th>Country</th><th>Number of Flights</th></tr></thead><tbody>`;
+                data.topCountries.forEach(country => {
+                    topCountriesHtml += `<tr><td>${country.country}</td><td>${country.numberOfFlights}</td></tr>`;
+                });
+                topCountriesHtml += '</tbody></table></div>';
+                resultsDiv.innerHTML += topCountriesHtml;
+            }
+        }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!-- Pet Type Selection Page
+
+NAME: Tony Nguyen
+DATE: Fall 2023
+CLASS: CPSC 321
+
+-->
+
+<html>
+  <body>
+    <form action="show_pets_by_type.html" method="POST">
+      <select name="PetTypeChoice" id="petTypeDropdown">
+      </select>
+      <input type="submit" value="Execute Query"/>
+    </form>
+  </body>
+  <script>
+    // Fetch and populate the dropdown list with pet types
+    fetch('/pet_types')
+        .then(response => response.text())
+        .then(optionsHTML => {
+            document.getElementById('petTypeDropdown').innerHTML = optionsHTML;
+        });
+</script>
+</html>

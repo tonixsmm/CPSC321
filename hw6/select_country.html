@@ -1,0 +1,25 @@
+<!-- CIA World Factbook App - Selecting Citites by Country
+
+NAME: Tony Nguyen
+DATE: Fall 2023
+CLASS: CPSC 321
+
+-->
+
+<html>
+  <body>
+    <form action="/show_city.html" method="POST">
+      <select name="CountryChoice" id="countryDropdown">
+      </select>
+      <input type="submit" value="Execute Query"/>
+    </form>
+  </body>
+  <script>
+    // Fetch and populate the dropdown list with Country name
+    fetch('/country_name')
+        .then(response => response.text())
+        .then(optionsHTML => {
+            document.getElementById('countryDropdown').innerHTML = optionsHTML;
+        });
+</script>
+</html>

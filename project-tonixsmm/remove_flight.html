@@ -1,0 +1,29 @@
+<html>
+    <header>
+        <h1>Flight History App</h1>
+        <h2>Modify Flight</h2>
+    </header>
+  <body onload="loadFlightData()">
+    <div id="flight-data"></div>
+
+    <form action="/remove_flight" method="post">
+        <p>Enter the flight information of the flight you want to remove</p>
+        <input type="text" name="airline_code_old" placeholder="Airline Code (2 characters)" required>
+        <input type="text" name="flight_number_old" placeholder="Flight Number" required>
+        <input type="text" name="departure_date_old" placeholder="Departure Date (YYYY-MM-DD)" required>
+        <br><br>
+        <button type="submit">Remove Flight</button>
+    </form>
+  </body>
+  <script>
+    // Fetch and populate the dropdown list with pet types\
+    function loadFlightData() {
+        fetch('/show_flight')
+        .then(response => response.text())
+        .then(html => {
+                    document.getElementById('flight-data').innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+    }
+</script>
+</html>

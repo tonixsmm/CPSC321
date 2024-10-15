@@ -1,0 +1,47 @@
+<html>
+    <header>
+        <h1>Flight History App</h1>
+        <h2>Search a Flight / Faceted Search</h2>
+    </header>
+  <body onload="loadFlightData">
+    <form action="/search_flight" method="post">
+        <p>Enter a value to the corresponding attribute field that you want to search for</p>
+        <input type="text" name="airline_code" placeholder="Airline Code (2 characters)">
+        <input type="text" name="airline_name" placeholder="Airline Name">
+        <input type="text" name="flight_number" placeholder="Flight Number">
+        <br><br>
+        <input type="text" name="departure_airport_code" placeholder="Departure Airport Code (3 characters)">
+        <input type="text" name="departure_date" placeholder="Departure Date (YYYY-MM-DD)">
+        <input type="text" name="departure_time" placeholder="Departure Time (HH:MM:SS)">
+        <br><br>
+        <input type="text" name="arrival_airport_code" placeholder="Arrival Airport Code (3 characters)">
+        <input type="text" name="arrival_date" placeholder="Arrival Date (YYYY-MM-DD)">
+        <input type="text" name="arrival_time" placeholder="Arrival Time (HH:MM:SS)">
+        <br><br>
+        <input type="text" name="miles" placeholder="Miles">
+        <br><br>
+        <input type="text" name="registration" placeholder="Aircraft Registration">
+        <input type="text" name="aircraft_manufacturer" placeholder="Aircraft Manufacturer">
+        <input type="text" name="aircraft_type" placeholder="Aircraft Type">
+        <input type="text" name="air_range" placeholder="Aircraft Range">
+        <input type="text" name="year_of_manufacture" placeholder="Year of Manufacturer">
+        <br><br>
+        <input type="text" name="seat_class" placeholder="Seat Class">
+        <input type="text" name="seat_number" placeholder="Seat Number">
+        <br><br>
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="flight-data"></div>
+  </body>
+  <script>
+    function loadFlightData() {
+        fetch('/search_flight')
+        .then(response => response.text())
+        .then(html => {
+                    document.getElementById('flight-data').innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+    }
+</script>
+</html>
